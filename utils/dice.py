@@ -79,3 +79,17 @@ def parse_and_roll(expr: str, *, max_dice: int = 100, max_sides: int = 1000,
         is_crit_success=is_crit_success,
         is_crit_failure=is_crit_failure,
     )
+
+REPEAT_RE = re.compile(r"^\s*\+(\d{1,2})\s+(.*)$")
+
+def extract_repeat(expr: str, *, max_times: int = 50) -> tuple[int, str]:
+    """
+    解析前綴 +N，回傳 (times, core_expr)
+    """
+    m = REPEAT_RE.match(expr)
+    if not m:
+        return 1, expr.strip()
+    times = int(m.group(1))
+    if not (1 <= times <= max_times):
+        raise DiceError(f"連續次數 1~{max_times}")
+    return times, m.group(2).strip()
