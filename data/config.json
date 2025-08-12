@@ -1,9 +1,0 @@
-{
-  "log_channel_id": 1404753925382471690,
-  "crit": {
-    "d20_crit_success": 20,
-    "d20_crit_failure": 1,
-    "d100_crit_success": 1,
-    "d100_crit_failure": 100
-  }
-}
