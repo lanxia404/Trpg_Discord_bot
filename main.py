@@ -18,7 +18,7 @@ if not TOKEN:
 
 intents = discord.Intents.default()
 intents.message_content = True  # 需要讀取訊息內容才能解析擲骰
-bot = commands.Bot(command_prefix="rpg!", intents=intents)
+bot = commands.Bot(command_prefix="rpg!", intents=intents, help_command=None)
 
 # 共用設定管理器（讓各 cogs 使用）
 config_manager = ConfigManager()
@@ -48,7 +48,8 @@ async def setup_hook():
         __import__("cogs.logs", fromlist=["LogsCog"]).LogsCog(bot, config_manager))
     await bot.add_cog(
         __import__("cogs.admin", fromlist=["AdminCog"]).AdminCog(bot, config_manager, app_owner_id))
-
+    await bot.add_cog(
+        __import__("cogs.help", fromlist=["HelpCog"]).HelpCog(bot))
 @bot.event
 async def on_ready():
     logger.info(f"Logged in as {bot.user} (id={bot.user.id})")
